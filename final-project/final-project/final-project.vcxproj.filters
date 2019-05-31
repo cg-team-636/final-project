@@ -545,6 +545,9 @@
     <ClInclude Include="glm\simd\vector_relational.h">
       <Filter>头文件\glm\simd</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glfw3.lib">
@@ -884,6 +887,12 @@
     </None>
     <None Include="glm\gtx\wrap.inl">
       <Filter>头文件\glm\gtx</Filter>
+    </None>
+    <None Include="fragmentShader.fs">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="vertexShader.vs">
+      <Filter>头文件</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
