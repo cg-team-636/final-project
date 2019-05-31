@@ -12,6 +12,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "shader.h"
+#include "camera.h"
 
 using namespace std;
 
@@ -20,21 +21,6 @@ const int WINDOW_HEIGHT = 800;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-
-//顶点着色器可以向片段着色器传数据
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
-"}\0";
 
 int main() {
 	//初始化opengl窗口和配置
@@ -66,70 +52,51 @@ int main() {
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
-	//顶点着色器
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	//片段着色器
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	//着色器程序
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-	bool show_window = true;
+	//着色器
+	Shader defaultShader("vertexShader.vs", "fragmentShader.fs");
 
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int EBO;
 
-	while (!glfwWindowShouldClose(window)) {
-		float vertices[] = { // 注意索引从0开始! 
+	float vertices[] = { // 注意索引从0开始! 
 		//位置				颜色
 		0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f, 
+		-0.5f, -0.5f, 0.0f,
 		0.0f, 0.5f, 0.0f
-		};
+	};
 
-		unsigned int indices[] = { // 注意索引从0开始! 
-			0, 1, 2 // 第一个三角形
-		};
+	unsigned int indices[] = { // 注意索引从0开始! 
+		0, 1, 2 // 第一个三角形
+	};
 
-		//必须先绑定VA0
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+	//必须先绑定VA0
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
-		//再绑定VBO
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//再绑定VBO
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		//使用EBO画多个三角形，组合成其它图形
-		glGenBuffers(1, &EBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	//使用EBO画多个三角形，组合成其它图形
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-		//再设置属性
-		//位置属性
-		//属性位置值为0的顶点属性
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
+	//再设置属性
+	//位置属性
+	//属性位置值为0的顶点属性
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
+	//使用着色器程序
+	defaultShader.use();
+
+	bool show_window = true;
+
+	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
-
-		//使用着色器程序
-		glUseProgram(shaderProgram);
 
 		//清除屏幕
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
