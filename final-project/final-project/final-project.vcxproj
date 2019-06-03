@@ -31,7 +31,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="block.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="floor.h" />
     <ClInclude Include="glad\glad.h" />
     <ClInclude Include="GLFW\glfw3.h" />
     <ClInclude Include="GLFW\glfw3native.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="KHR\khrplatform.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glfw3.lib" />
@@ -315,7 +318,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{A7CD086B-F2E7-4EC7-91FA-FF7082DE4B10}</ProjectGuid>
     <RootNamespace>finalproject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

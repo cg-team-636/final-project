@@ -1,2 +1,13 @@
 ﻿  main.cpp
-  final-project.vcxproj -> D:\user_chen\computer graph\peoject\final-project\final-project\Debug\final-project.exe
+e:\grade3\计图期末作业\final-project\final-project\final-project\block.h(89): warning C4018: “<”: 有符号/无符号不匹配
+e:\grade3\计图期末作业\final-project\final-project\final-project\floor.h(22): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(92): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(119): warning C4018: “<”: 有符号/无符号不匹配
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(210): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(211): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(215): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(216): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(218): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(219): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(226): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+  final-project.vcxproj -> E:\Grade3\计图期末作业\final-project\final-project\Debug\final-project.exe

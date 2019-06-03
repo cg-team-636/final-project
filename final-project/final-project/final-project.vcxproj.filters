@@ -40,6 +40,18 @@
     <Filter Include="头文件\glm\simd">
       <UniqueIdentifier>{03b5b4f9-9afd-4480-be46-7afca56c7c12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\shader">
+      <UniqueIdentifier>{92d9895c-ce29-4c52-a6d6-08012f1cc54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\camera">
+      <UniqueIdentifier>{7aba8411-d713-4ce5-8853-fa9ec1b63304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\asset">
+      <UniqueIdentifier>{acfbc26c-ee00-4b4a-8bd8-7a9ca130d2fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\texture">
+      <UniqueIdentifier>{a648bfa2-f090-4542-b5e2-b8930375fd51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -108,9 +120,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="imconfig.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="glm\common.hpp">
@@ -545,8 +554,20 @@
     <ClInclude Include="glm\simd\vector_relational.h">
       <Filter>头文件\glm\simd</Filter>
     </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>头文件\shader</Filter>
+    </ClInclude>
     <ClInclude Include="camera.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="floor.h">
+      <Filter>头文件\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>头文件\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>头文件\texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -889,10 +910,10 @@
       <Filter>头文件\glm\gtx</Filter>
     </None>
     <None Include="fragmentShader.fs">
-      <Filter>头文件</Filter>
+      <Filter>头文件\shader</Filter>
     </None>
     <None Include="vertexShader.vs">
-      <Filter>头文件</Filter>
+      <Filter>头文件\shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
