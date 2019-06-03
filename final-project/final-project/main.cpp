@@ -28,10 +28,16 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+
+//	初始化光源
+glm::vec3 lightPos(0.0f, 5.0f, 5.0f);
+
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
 
 int main() {
 	//	初始化opengl窗口和配置
@@ -82,7 +88,13 @@ int main() {
 	defaultShader.use();
 	defaultShader.setInt("floorTexture", 0);
 
+
 	bool show_window = true;
+	float ambientStrength = 0.1f;
+	float diffuseStrength = 1.0f;
+	float specularStrength = 1.0f;
+	int ShininessStrength = 30;
+	glm::vec3 viewPos;
 
 	//	开启深度测试
 	glEnable(GL_DEPTH_TEST);
@@ -125,18 +137,20 @@ int main() {
 		//	绑定VBO
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floors.size() * 36 * 5, vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floors.size() * 36 * 8, vertices, GL_STATIC_DRAW);
 
 		//	设置位置属性
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		//	设置贴图属性
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		//	设置纹理属性
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 
-		//	取消绑定
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//	设置法向量属性
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+
 		delete vertices;
 
 
@@ -145,25 +159,31 @@ int main() {
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		model = glm::rotate(model, glm::radians(15.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 		view = camera.GetViewMatrix();
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-		// 获取Uniform变量的位置
-		unsigned int modelLoc = glGetUniformLocation(defaultShader.ID, "model");
-		unsigned int viewLoc = glGetUniformLocation(defaultShader.ID, "view");
-		unsigned int projectionLoc = glGetUniformLocation(defaultShader.ID, "projection");
-		// 将矩阵传入着色器
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+
+		viewPos = camera.Position;
+		defaultShader.setFloat("ambientStrength", ambientStrength);
+		defaultShader.setFloat("diffuseStrength", diffuseStrength);
+		defaultShader.setFloat("specularStrength", specularStrength);
+		defaultShader.setInt("ShininessStrength", ShininessStrength);
+
+		defaultShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		defaultShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		defaultShader.setVec3("lightPos", lightPos);
+		defaultShader.setVec3("viewPos", viewPos);
+
+		defaultShader.setMat4("model", model);
+		defaultShader.setMat4("view", view);
+		defaultShader.setMat4("projection", projection);
+
 
 		//	激活纹理
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
 
 		//	绘制图元
-		defaultShader.use();
-		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, floors.size() * 36);
 
 
@@ -206,8 +226,7 @@ void processInput(GLFWwindow* window) {
 
 //	鼠标移动
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-	if (firstMouse)
-	{
+	if (firstMouse){
 		mouseX = xpos;
 		mouseY = ypos;
 		firstMouse = false;
