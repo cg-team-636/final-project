@@ -30,7 +30,7 @@ float lastFrame = 0.0f;
 
 
 //	初始化光源
-glm::vec3 lightPos(0.0f, 5.0f, 5.0f);
+glm::vec3 lightPos(10.0f, -5.0f, 5.0f);
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -90,7 +90,7 @@ int main() {
 
 
 	bool show_window = true;
-	float ambientStrength = 0.1f;
+	float ambientStrength = 0.5f;
 	float diffuseStrength = 1.0f;
 	float specularStrength = 1.0f;
 	int ShininessStrength = 30;
