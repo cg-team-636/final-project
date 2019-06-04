@@ -52,6 +52,9 @@
     <Filter Include="头文件\texture">
       <UniqueIdentifier>{a648bfa2-f090-4542-b5e2-b8930375fd51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\skyBox">
+      <UniqueIdentifier>{6f0a4563-62a8-431d-85bd-a991b27500b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -569,6 +572,9 @@
     <ClInclude Include="stb_image.h">
       <Filter>头文件\texture</Filter>
     </ClInclude>
+    <ClInclude Include="skyBox.h">
+      <Filter>头文件\skyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glfw3.lib">
@@ -909,10 +915,16 @@
     <None Include="glm\gtx\wrap.inl">
       <Filter>头文件\glm\gtx</Filter>
     </None>
-    <None Include="fragmentShader.fs">
+    <None Include="block.fs">
       <Filter>头文件\shader</Filter>
     </None>
-    <None Include="vertexShader.vs">
+    <None Include="block.vs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="skyBox.fs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="skyBox.vs">
       <Filter>头文件\shader</Filter>
     </None>
   </ItemGroup>
