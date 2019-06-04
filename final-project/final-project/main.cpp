@@ -14,6 +14,7 @@
 #include "shader.h"
 #include "camera.h"
 #include "floor.h"
+#include "skyBox.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
 
 //	初始化相机
-Camera camera(glm::vec3(0.0f, 0.0f, 10.0f));
+Camera camera(glm::vec3(0.0f, 10.0f, 10.0f));
 float mouseX = 0.0f;
 float mouseY = 0.0f;
 bool firstMouse = true;
@@ -29,7 +30,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 
-//	初始化光源
+//	初始化光源位置
 glm::vec3 lightPos(10.0f, -5.0f, 5.0f);
 
 
@@ -37,7 +38,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
 
 int main() {
 	//	初始化opengl窗口和配置
@@ -62,6 +62,51 @@ int main() {
 		return -1;
 	}
 
+	//	开启深度测试
+	glEnable(GL_DEPTH_TEST);
+
+	//	加载纹理
+	unsigned int skyBoxTexture = loadSkyBoxTexture();
+	unsigned int floorTexture = loadBlockTexture("textures/blocks/iron_block.png");
+
+	//	着色器
+	Shader blockShader("block.vs", "block.fs");
+	blockShader.use();
+	blockShader.setInt("floorTexture", 0);
+
+	Shader skyBoxShader("skyBox.vs", "skyBox.fs");
+	skyBoxShader.use();
+	skyBoxShader.setInt("skyBoxTexture", 0);
+
+	bool show_window = true;
+	//	光照参数
+	float ambientStrength = 0.5f;
+	float diffuseStrength = 1.0f;
+	float specularStrength = 1.0f;
+	int ShininessStrength = 30;
+	glm::vec3 viewPos;
+
+	//	初始化blockVAO、blockVBO
+	unsigned int blockVAO;
+	unsigned int blockVBO;
+
+	//	绑定blockVAO
+	glGenVertexArrays(1, &blockVAO);
+	glBindVertexArray(blockVAO);
+
+	//	设置skyBoxVAO、skyBoxVBO
+	unsigned int skyBoxVAO;
+	unsigned int skyBoxVBO;
+	glGenVertexArrays(1, &skyBoxVAO);
+	glBindVertexArray(skyBoxVAO);
+
+	glGenBuffers(1, &skyBoxVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyBoxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyBoxVertices), &skyBoxVertices, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
 	//	创建并绑定ImGui
 	const char* glsl_version = "#version 130";
 	IMGUI_CHECKVERSION();
@@ -70,34 +115,6 @@ int main() {
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
-
-
-	unsigned int VAO;
-	unsigned int VBO;
-
-	//必须先绑定VA0
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	//	读取地板的纹理
-	unsigned int floorTexture = getFloorTexture();
-
-
-	//	着色器
-	Shader defaultShader("vertexShader.vs", "fragmentShader.fs");
-	defaultShader.use();
-	defaultShader.setInt("floorTexture", 0);
-
-
-	bool show_window = true;
-	float ambientStrength = 0.5f;
-	float diffuseStrength = 1.0f;
-	float specularStrength = 1.0f;
-	int ShininessStrength = 30;
-	glm::vec3 viewPos;
-
-	//	开启深度测试
-	glEnable(GL_DEPTH_TEST);
 
 	while (!glfwWindowShouldClose(window)) {
 		//	计算当前时间和帧间隔时间
@@ -134,9 +151,10 @@ int main() {
 		//	将Block转为float数组
 		float* vertices = blockToFloat(blocks);
 
-		//	绑定VBO
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		//	绑定blockVAO, blockVBO
+		glBindVertexArray(blockVAO);
+		glGenBuffers(1, &blockVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floors.size() * 36 * 8, vertices, GL_STATIC_DRAW);
 
 		//	设置位置属性
@@ -158,33 +176,50 @@ int main() {
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
-		model = glm::rotate(model, glm::radians(15.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		view = camera.GetViewMatrix();
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-
-
 		viewPos = camera.Position;
-		defaultShader.setFloat("ambientStrength", ambientStrength);
-		defaultShader.setFloat("diffuseStrength", diffuseStrength);
-		defaultShader.setFloat("specularStrength", specularStrength);
-		defaultShader.setInt("ShininessStrength", ShininessStrength);
 
-		defaultShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-		defaultShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-		defaultShader.setVec3("lightPos", lightPos);
-		defaultShader.setVec3("viewPos", viewPos);
+		blockShader.use();
+		blockShader.setFloat("ambientStrength", ambientStrength);
+		blockShader.setFloat("diffuseStrength", diffuseStrength);
+		blockShader.setFloat("specularStrength", specularStrength);
+		blockShader.setInt("ShininessStrength", ShininessStrength);
 
-		defaultShader.setMat4("model", model);
-		defaultShader.setMat4("view", view);
-		defaultShader.setMat4("projection", projection);
+		blockShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		blockShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		blockShader.setVec3("lightPos", lightPos);
+		blockShader.setVec3("viewPos", viewPos);
 
+		blockShader.setMat4("model", model);
+		blockShader.setMat4("view", view);
+		blockShader.setMat4("projection", projection);
 
-		//	激活纹理
+		//	激活Block纹理
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
-
-		//	绘制图元
 		glDrawArrays(GL_TRIANGLES, 0, floors.size() * 36);
+		glBindVertexArray(0);
+
+
+		
+		//	深度欺骗
+		glDepthFunc(GL_LEQUAL);  
+
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+		skyBoxShader.use();
+		skyBoxShader.setMat4("view", view);
+		skyBoxShader.setMat4("projection", projection);
+
+		//	绘制天空盒
+		glBindVertexArray(skyBoxVAO);
+		//	激活天空盒纹理
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skyBoxTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+
+		glDepthFunc(GL_LESS);
 
 
 		ImGui::Render();
@@ -198,8 +233,10 @@ int main() {
 		glfwSwapBuffers(window);
 	}
 
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(1, &blockVAO);
+	glDeleteBuffers(1, &blockVBO);
+	glDeleteVertexArrays(1, &skyBoxVAO);
+	glDeleteBuffers(1, &skyBoxVBO);
 
 	glfwTerminate();
 	return 0;
@@ -245,3 +282,5 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 	camera.ProcessMouseScroll(yoffset);
 }
+
+

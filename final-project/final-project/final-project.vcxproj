@@ -191,13 +191,14 @@
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="KHR\khrplatform.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="skyBox.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragmentShader.fs" />
+    <None Include="block.fs" />
     <None Include="glm\detail\func_common.inl" />
     <None Include="glm\detail\func_common_simd.inl" />
     <None Include="glm\detail\func_exponential.inl" />
@@ -309,7 +310,9 @@
     <None Include="glm\gtx\vector_angle.inl" />
     <None Include="glm\gtx\vector_query.inl" />
     <None Include="glm\gtx\wrap.inl" />
-    <None Include="vertexShader.vs" />
+    <None Include="block.vs" />
+    <None Include="skyBox.fs" />
+    <None Include="skyBox.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="glm\CMakeLists.txt" />
