@@ -15,6 +15,7 @@
 #include "camera.h"
 #include "floor.h"
 #include "skyBox.h"
+#include "model.h"
 
 using namespace std;
 
@@ -67,7 +68,10 @@ int main() {
 
 	//	加载纹理
 	unsigned int skyBoxTexture = loadSkyBoxTexture();
-	unsigned int floorTexture = loadBlockTexture("textures/blocks/iron_block.png");
+	unsigned int floorTexture = loadBlockTexture("textures/blocks/dirt.png");
+
+	//	导入模型
+	Model ourModel("model/nanosuit.obj");
 
 	//	着色器
 	Shader blockShader("block.vs", "block.fs");
@@ -78,7 +82,12 @@ int main() {
 	skyBoxShader.use();
 	skyBoxShader.setInt("skyBoxTexture", 0);
 
-	bool show_window = true;
+	Shader modelShader("model.vs", "model.fs");
+	modelShader.use();
+	
+	
+
+
 	//	光照参数
 	float ambientStrength = 0.5f;
 	float diffuseStrength = 1.0f;
@@ -116,6 +125,11 @@ int main() {
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
+
+	bool show_window = true;
+	bool export_model = false;
+
+
 	while (!glfwWindowShouldClose(window)) {
 		//	计算当前时间和帧间隔时间
 		float currentFrame = glfwGetTime();
@@ -139,6 +153,7 @@ int main() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		ImGui::Begin("Edit color", &show_window, ImGuiWindowFlags_MenuBar);
+		ImGui::Checkbox("Export the model", &export_model);
 		ImGui::End();
 
 
@@ -148,28 +163,27 @@ int main() {
 		vector<Block*> blocks;
 		for (int i = 0; i < floors.size(); i++)
 			blocks.push_back((Block*)floors[i]);
-		//	将Block转为float数组
-		float* vertices = blockToFloat(blocks);
+		//	将vector<Block>转为vector<Point>
+		vector<Point> vertices = blockToPoint(blocks);
 
-		//	绑定blockVAO, blockVBO
+		//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
 		glBindVertexArray(blockVAO);
 		glGenBuffers(1, &blockVBO);
 		glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floors.size() * 36 * 8, vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
 		//	设置位置属性
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
 		//	设置纹理属性
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
 		glEnableVertexAttribArray(1);
 
 		//	设置法向量属性
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
 		glEnableVertexAttribArray(2);
 
-		delete vertices;
 
 
 		//	创建坐标转换矩阵, 将局部坐标变换为标准设备坐标 
@@ -180,6 +194,7 @@ int main() {
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 		viewPos = camera.Position;
 
+		//	设置shader的uniforms前要开启着色器
 		blockShader.use();
 		blockShader.setFloat("ambientStrength", ambientStrength);
 		blockShader.setFloat("diffuseStrength", diffuseStrength);
@@ -195,12 +210,19 @@ int main() {
 		blockShader.setMat4("view", view);
 		blockShader.setMat4("projection", projection);
 
-		//	激活Block纹理
+		//	激活Block纹理并绘制Block
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
-		glDrawArrays(GL_TRIANGLES, 0, floors.size() * 36);
+		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 		glBindVertexArray(0);
 
+		if (export_model) {
+			modelShader.use();
+			modelShader.setMat4("projection", projection);
+			modelShader.setMat4("view", view);
+			modelShader.setMat4("model", model);
+			ourModel.Draw(modelShader);
+		}
 
 		
 		//	深度欺骗
