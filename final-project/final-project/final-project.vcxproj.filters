@@ -55,6 +55,9 @@
     <Filter Include="头文件\skyBox">
       <UniqueIdentifier>{6f0a4563-62a8-431d-85bd-a991b27500b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\assimp">
+      <UniqueIdentifier>{2c809789-ec75-4abd-8034-62ae151f88c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -100,30 +103,6 @@
     </ClInclude>
     <ClInclude Include="KHR\khrplatform.h">
       <Filter>头文件\KHR</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_glfw.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_opengl3.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_internal.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_rectpack.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_textedit.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_truetype.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="imconfig.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="glm\common.hpp">
       <Filter>头文件\glm</Filter>
@@ -575,9 +554,141 @@
     <ClInclude Include="skyBox.h">
       <Filter>头文件\skyBox</Filter>
     </ClInclude>
+    <ClInclude Include="assimp\ai_assert.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\anim.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\camera.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\cexport.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\cfileio.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\cimport.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\color4.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\config.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\DefaultLogger.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\Exporter.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\defs.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\Importer.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\importerdesc.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_opengl3.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\IOStream.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\light.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_glfw.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\LogStream.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\material.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\matrix3x3.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\IOSystem.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\mesh.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\metadata.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\matrix4x4.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\postprocess.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\quaternion.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\ProgressHandler.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\NullLogger.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\Logger.hpp">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\scene.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\vector2.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\types.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\vector3.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\texture.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp\version.h">
+      <Filter>头文件\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>头文件\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>头文件\asset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glfw3.lib">
+      <Filter>头文件\lib</Filter>
+    </Library>
+    <Library Include="lib\assimp-vc140-mt.lib">
       <Filter>头文件\lib</Filter>
     </Library>
   </ItemGroup>
@@ -925,6 +1036,36 @@
       <Filter>头文件\shader</Filter>
     </None>
     <None Include="skyBox.vs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="assimp\.editorconfig">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\color4.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\material.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\matrix4x4.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\vector2.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\quaternion.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\vector3.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="assimp\matrix3x3.inl">
+      <Filter>头文件\assimp</Filter>
+    </None>
+    <None Include="model.fs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="model.vs">
       <Filter>头文件\shader</Filter>
     </None>
   </ItemGroup>
