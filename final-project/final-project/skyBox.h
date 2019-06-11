@@ -7,7 +7,7 @@
 using namespace std;
 
 float skyBoxVertices[] = {
-	// positions          
+	// 后      
 	-1.0f,  1.0f, -1.0f,
 	-1.0f, -1.0f, -1.0f,
 	1.0f, -1.0f, -1.0f,
@@ -15,6 +15,7 @@ float skyBoxVertices[] = {
 	1.0f,  1.0f, -1.0f,
 	-1.0f,  1.0f, -1.0f,
 
+	//	左
 	-1.0f, -1.0f,  1.0f,
 	-1.0f, -1.0f, -1.0f,
 	-1.0f,  1.0f, -1.0f,
@@ -22,6 +23,7 @@ float skyBoxVertices[] = {
 	-1.0f,  1.0f,  1.0f,
 	-1.0f, -1.0f,  1.0f,
 
+	//	右
 	1.0f, -1.0f, -1.0f,
 	1.0f, -1.0f,  1.0f,
 	1.0f,  1.0f,  1.0f,
@@ -29,6 +31,7 @@ float skyBoxVertices[] = {
 	1.0f,  1.0f, -1.0f,
 	1.0f, -1.0f, -1.0f,
 
+	//	前
 	-1.0f, -1.0f,  1.0f,
 	-1.0f,  1.0f,  1.0f,
 	1.0f,  1.0f,  1.0f,
@@ -36,6 +39,7 @@ float skyBoxVertices[] = {
 	1.0f, -1.0f,  1.0f,
 	-1.0f, -1.0f,  1.0f,
 
+	//	上
 	-1.0f,  1.0f, -1.0f,
 	1.0f,  1.0f, -1.0f,
 	1.0f,  1.0f,  1.0f,
@@ -43,6 +47,7 @@ float skyBoxVertices[] = {
 	-1.0f,  1.0f,  1.0f,
 	-1.0f,  1.0f, -1.0f,
 
+	//	下
 	-1.0f, -1.0f, -1.0f,
 	-1.0f, -1.0f,  1.0f,
 	1.0f, -1.0f, -1.0f,
@@ -57,12 +62,12 @@ unsigned int loadSkyBoxTexture() {
 
 	vector<std::string> faces
 	{
-		"textures/skybox/right.jpg",
-		"textures/skybox/left.jpg",
-		"textures/skybox/top.jpg",
-		"textures/skybox/bottom.jpg",
-		"textures/skybox/front.jpg",
-		"textures/skybox/back.jpg"
+		"textures/skybox/cloudtop_rt.jpg",
+		"textures/skybox/cloudtop_lf.jpg",
+		"textures/skybox/cloudtop_up.jpg",
+		"textures/skybox/cloudtop_dn.jpg",
+		"textures/skybox/cloudtop_bk.jpg",
+		"textures/skybox/cloudtop_ft.jpg"
 	};
 
 	unsigned int textureID;
