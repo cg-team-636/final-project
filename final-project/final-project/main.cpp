@@ -71,7 +71,7 @@ int main() {
 	unsigned int skyBoxTexture = loadSkyBoxTexture();
 
 	//	导入模型
-	Model ourModel("model/nanosuit.obj");
+	Model ourModel("model/Tree/Tree.obj");
 
 	//	着色器
 	Shader blockShader("block.vs", "block.fs");
@@ -216,7 +216,7 @@ int main() {
 		}
 
 		//	渲染导入的模型
-		if (export_model) {
+		if (true) {
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
