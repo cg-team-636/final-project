@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -66,9 +67,8 @@ int main() {
 	//	开启深度测试
 	glEnable(GL_DEPTH_TEST);
 
-	//	加载纹理
+	//	加载天空纹理
 	unsigned int skyBoxTexture = loadSkyBoxTexture();
-	unsigned int floorTexture = loadBlockTexture("textures/blocks/dirt.png");
 
 	//	导入模型
 	Model ourModel("model/nanosuit.obj");
@@ -85,7 +85,10 @@ int main() {
 	Shader modelShader("model.vs", "model.fs");
 	modelShader.use();
 	
-	
+	//	初始化Block
+	vector<vector<Block*>> blocks;
+	vector<Block*> floors = createFloor();
+	blocks.push_back(floors);
 
 
 	//	光照参数
@@ -156,36 +159,6 @@ int main() {
 		ImGui::Checkbox("Export the model", &export_model);
 		ImGui::End();
 
-
-		//	绘制地板
-		vector<Floor*> floors = createFloor();
-		//	将Floor转为Block
-		vector<Block*> blocks;
-		for (int i = 0; i < floors.size(); i++)
-			blocks.push_back((Block*)floors[i]);
-		//	将vector<Block>转为vector<Point>
-		vector<Point> vertices = blockToPoint(blocks);
-
-		//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
-		glBindVertexArray(blockVAO);
-		glGenBuffers(1, &blockVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
-
-		//	设置位置属性
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		//	设置纹理属性
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
-		glEnableVertexAttribArray(1);
-
-		//	设置法向量属性
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
-		glEnableVertexAttribArray(2);
-
-
-
 		//	创建坐标转换矩阵, 将局部坐标变换为标准设备坐标 
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
@@ -210,12 +183,39 @@ int main() {
 		blockShader.setMat4("view", view);
 		blockShader.setMat4("projection", projection);
 
-		//	激活Block纹理并绘制Block
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, floorTexture);
-		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-		glBindVertexArray(0);
 
+		//	渲染所有的Block
+		for (int i = 0; i < blocks.size(); i++) {
+			//	将vector<Block>转为vector<Point>
+			vector<Point> vertices = blockToPoint(blocks[i]);
+
+			//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
+			glBindVertexArray(blockVAO);
+			glGenBuffers(1, &blockVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
+			//	设置位置属性
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(0);
+
+			//	设置纹理属性
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
+			glEnableVertexAttribArray(1);
+
+			//	设置法向量属性
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
+			glEnableVertexAttribArray(2);
+
+
+			//	激活Block纹理并绘制Block
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, blocks[i][0]->textureID);
+			glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+			glBindVertexArray(0);
+		}
+
+		//	渲染导入的模型
 		if (export_model) {
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
