@@ -1,7 +1,7 @@
 ﻿  main.cpp
-e:\grade3\计图期末作业\final-project\final-project\final-project\block.h(99): warning C4018: “<”: 有符号/无符号不匹配
-e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(135): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(164): warning C4018: “<”: 有符号/无符号不匹配
+e:\grade3\计图期末作业\final-project\final-project\final-project\block.h(125): warning C4018: “<”: 有符号/无符号不匹配
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(138): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(188): warning C4018: “<”: 有符号/无符号不匹配
 e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(289): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
 e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(290): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
 e:\grade3\计图期末作业\final-project\final-project\final-project\main.cpp(294): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据

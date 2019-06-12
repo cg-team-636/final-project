@@ -33,10 +33,13 @@ public:
 	vector<Point> vertices;
 	const float blockSize = 1.0f;
 	Point center;
+	unsigned int textureID;
 
-	//	给定方块中心点生成方块的顶点
-	Block(Point center) {
+	//	根据方块中心坐标生成方块的36个顶点坐标
+	Block(Point center, char const* textPath) {
 		this->center = center;
+
+		textureID = loadBlockTexture(textPath);
 
 		//	正面
 		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
@@ -91,6 +94,29 @@ public:
 		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
+
+
+	//	加载Block纹理
+	unsigned int loadBlockTexture(char const* path) {
+		unsigned int textureID;
+		glGenTextures(1, &textureID);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		// 为当前绑定的纹理对象设置环绕、过滤方式
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		int width, height, nrChannels;
+		unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		//	释放图片内存
+		stbi_image_free(data);
+		return textureID;
+	}
 };
 
 
@@ -101,28 +127,6 @@ vector<Point> blockToPoint(vector<Block*> blocks) {
 	}
 
 	return vertices;
-}
-
-//	加载纹理
-unsigned int loadBlockTexture(char const* path) {
-	unsigned int textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	// 为当前绑定的纹理对象设置环绕、过滤方式
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	int width, height, nrChannels;
-	unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	//	释放图片内存
-	stbi_image_free(data);
-	return textureID;
 }
 
 
