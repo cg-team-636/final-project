@@ -42,20 +42,20 @@ public:
 		textureID = loadBlockTexture(textPath);
 
 		//	正面
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
 
 		//	后面
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
 
 
 		//	左面
@@ -78,21 +78,21 @@ public:
 
 
 		//	上面
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y + blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 
 
 		//	下面
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
-		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x - blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z + blockSize / 2), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+		vertices.push_back(Point(glm::vec3(center.Position.x + blockSize / 2, center.Position.y - blockSize / 2, center.Position.z - blockSize / 2), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
 	}
 
 
