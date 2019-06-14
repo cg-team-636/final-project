@@ -38,7 +38,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 //	初始化光源位置
-glm::vec3 lightPos(-2.0f, 5.0f, -4.0f);
+glm::vec3 lightPos(-1.0f, 5.0f, 2.0f);
 
 // 全局 blocks 
 vector<vector<Block*>> blocks;
@@ -106,9 +106,9 @@ int main() {
 
 	// 测试阴影的方块
 	vector<Block*> testBlocks;
-	Block* testBlock1 = new Block(Point(glm::vec3(-2.0f, 5.0f, -4.0f)), "textures/blocks/dirt.png");
-	Block* testBlock2 = new Block(Point(glm::vec3(5, 2, -5)), "textures/blocks/dirt.png");
-	Block* testBlock3 = new Block(Point(glm::vec3(5, 3, -5)), "textures/blocks/dirt.png");
+	Block* testBlock1 = new Block(Point(glm::vec3(-1.0f, 5.0f, 2.0f)), "textures/blocks/dirt.png");
+	Block* testBlock2 = new Block(Point(glm::vec3(3, 1, -3)), "textures/blocks/dirt.png");
+	Block* testBlock3 = new Block(Point(glm::vec3(3, 2, -3)), "textures/blocks/dirt.png");
 	Block* testBlock4 = new Block(Point(glm::vec3(0, 1, 0)), "textures/blocks/dirt.png");
 	testBlocks.push_back(testBlock1);
 	testBlocks.push_back(testBlock2);
@@ -117,10 +117,10 @@ int main() {
 	blocks.push_back(testBlocks);
 
 	//	光照参数
-	float ambientStrength = 0.5f;
+	float ambientStrength = 1.0f;
 	float diffuseStrength = 1.0f;
 	float specularStrength = 1.0f;
-	int ShininessStrength = 30;
+	int ShininessStrength = 64;
 	glm::vec3 viewPos;
 
 	//	绑定blockVAO
