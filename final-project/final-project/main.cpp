@@ -23,6 +23,12 @@ using namespace std;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow* window);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void renderScene();
+
 //	初始化相机
 Camera camera(glm::vec3(0.0f, 10.0f, 10.0f));
 float mouseX = 0.0f;
@@ -31,15 +37,14 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-
 //	初始化光源位置
-glm::vec3 lightPos(10.0f, -5.0f, 5.0f);
+glm::vec3 lightPos(-2.0f, 5.0f, -4.0f);
 
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+// 全局 blocks 
+vector<vector<Block*>> blocks;
+//	初始化blockVAO、blockVBO
+unsigned int blockVAO;
+unsigned int blockVBO;
 
 int main() {
 	//	初始化opengl窗口和配置
@@ -74,9 +79,19 @@ int main() {
 	Model ourModel("model/Tree/Tree.obj");
 
 	//	着色器
-	Shader blockShader("block.vs", "block.fs");
+	/*Shader blockShader("block.vs", "block.fs");
 	blockShader.use();
-	blockShader.setInt("floorTexture", 0);
+	blockShader.setInt("floorTexture", 0);*/
+	Shader blockShader("shadowMappingVs.vs", "shadowMappingFs.fs");
+	blockShader.use();
+	blockShader.setInt("ourTexture", 0);
+	blockShader.setInt("shadowMap", 1);
+
+	Shader simpleDepthShader("shadowMappingDepthVs.vs", "shadowMappingDepthFs.fs");
+
+	Shader debugDepthQuad("debugQuadVs.vs", "debugQuadDepthFs.fs");
+	debugDepthQuad.use();
+	debugDepthQuad.setInt("depthMap", 0);
 
 	Shader skyBoxShader("skyBox.vs", "skyBox.fs");
 	skyBoxShader.use();
@@ -86,10 +101,20 @@ int main() {
 	modelShader.use();
 	
 	//	初始化Block
-	vector<vector<Block*>> blocks;
 	vector<Block*> floors = createFloor();
 	blocks.push_back(floors);
 
+	// 测试阴影的方块
+	vector<Block*> testBlocks;
+	Block* testBlock1 = new Block(Point(glm::vec3(-2.0f, 5.0f, -4.0f)), "textures/blocks/dirt.png");
+	Block* testBlock2 = new Block(Point(glm::vec3(5, 2, -5)), "textures/blocks/dirt.png");
+	Block* testBlock3 = new Block(Point(glm::vec3(5, 3, -5)), "textures/blocks/dirt.png");
+	Block* testBlock4 = new Block(Point(glm::vec3(0, 1, 0)), "textures/blocks/dirt.png");
+	testBlocks.push_back(testBlock1);
+	testBlocks.push_back(testBlock2);
+	testBlocks.push_back(testBlock3);
+	testBlocks.push_back(testBlock4);
+	blocks.push_back(testBlocks);
 
 	//	光照参数
 	float ambientStrength = 0.5f;
@@ -97,10 +122,6 @@ int main() {
 	float specularStrength = 1.0f;
 	int ShininessStrength = 30;
 	glm::vec3 viewPos;
-
-	//	初始化blockVAO、blockVBO
-	unsigned int blockVAO;
-	unsigned int blockVBO;
 
 	//	绑定blockVAO
 	glGenVertexArrays(1, &blockVAO);
@@ -118,6 +139,28 @@ int main() {
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+	// 为渲染的深度贴图创建一个帧缓冲对象
+	unsigned int depthMapFBO;
+	glGenFramebuffers(1, &depthMapFBO);
+	// 创建一个2D纹理，提供给帧缓冲的深度缓冲使用
+	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+	unsigned int depthMap;
+	glGenTextures(1, &depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	// 把生成的深度纹理作为帧缓冲的深度缓冲
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	//	创建并绑定ImGui
 	const char* glsl_version = "#version 130";
@@ -140,13 +183,11 @@ int main() {
 		lastFrame = currentFrame;
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-
 		//	获取键盘输入
 		processInput(window);
 
 		//	清除屏幕
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
 		//	清除深度缓冲
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -167,53 +208,48 @@ int main() {
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 		viewPos = camera.Position;
 
+		glm::mat4 lightProjection, lightView;
+		glm::mat4 lightSpaceMatrix;
+		float near_plane = 1.0f, far_plane = 7.5f;
+		// 计算观察和投影矩阵
+		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		lightSpaceMatrix = lightProjection * lightView;
+
+		// 应用到shader
+		simpleDepthShader.use();
+		simpleDepthShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		simpleDepthShader.setMat4("model", model);
+
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		renderScene();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		// 重置viewport
+		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		//	设置shader的uniforms前要开启着色器
 		blockShader.use();
+		blockShader.setMat4("model", model);
+		blockShader.setMat4("view", view);
+		blockShader.setMat4("projection", projection);
+		blockShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
 		blockShader.setFloat("ambientStrength", ambientStrength);
 		blockShader.setFloat("diffuseStrength", diffuseStrength);
 		blockShader.setFloat("specularStrength", specularStrength);
 		blockShader.setInt("ShininessStrength", ShininessStrength);
-
 		blockShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 		blockShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		blockShader.setVec3("lightPos", lightPos);
-		blockShader.setVec3("viewPos", viewPos);
+		blockShader.setVec3("viewPos", viewPos);	
 
-		blockShader.setMat4("model", model);
-		blockShader.setMat4("view", view);
-		blockShader.setMat4("projection", projection);
-
-
-		//	渲染所有的Block
-		for (int i = 0; i < blocks.size(); i++) {
-			//	将vector<Block>转为vector<Point>
-			vector<Point> vertices = blockToPoint(blocks[i]);
-
-			//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
-			glBindVertexArray(blockVAO);
-			glGenBuffers(1, &blockVBO);
-			glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
-
-			//	设置位置属性
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-			glEnableVertexAttribArray(0);
-
-			//	设置纹理属性
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
-			glEnableVertexAttribArray(1);
-
-			//	设置法向量属性
-			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
-			glEnableVertexAttribArray(2);
-
-
-			//	激活Block纹理并绘制Block
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, blocks[i][0]->textureID);
-			glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-			glBindVertexArray(0);
-		}
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		renderScene();
 
 		//	渲染导入的模型
 		if (true) {
@@ -305,4 +341,35 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 	camera.ProcessMouseScroll(yoffset);
 }
 
+void renderScene() {
+	//	渲染所有的Block
+	for (int i = 0; i < blocks.size(); i++) {
+		//	将vector<Block>转为vector<Point>
+		vector<Point> vertices = blockToPoint(blocks[i]);
 
+		//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
+		glBindVertexArray(blockVAO);
+		glGenBuffers(1, &blockVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
+		//	设置位置属性
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		//	设置纹理属性
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
+		glEnableVertexAttribArray(1);
+
+		//	设置法向量属性
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
+		glEnableVertexAttribArray(2);
+
+
+		//	激活Block纹理并绘制Block
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, blocks[i][0]->textureID);
+		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+		glBindVertexArray(0);
+	}
+}

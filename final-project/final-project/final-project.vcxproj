@@ -243,6 +243,8 @@
     <None Include="assimp\vector2.inl" />
     <None Include="assimp\vector3.inl" />
     <None Include="block.fs" />
+    <None Include="debugQuadDepthFs.fs" />
+    <None Include="debugQuadVs.vs" />
     <None Include="glm\detail\func_common.inl" />
     <None Include="glm\detail\func_common_simd.inl" />
     <None Include="glm\detail\func_exponential.inl" />
@@ -357,6 +359,10 @@
     <None Include="block.vs" />
     <None Include="model.fs" />
     <None Include="model.vs" />
+    <None Include="shadowMappingDepthFs.fs" />
+    <None Include="shadowMappingDepthVs.vs" />
+    <None Include="shadowMappingFs.fs" />
+    <None Include="shadowMappingVs.vs" />
     <None Include="skyBox.fs" />
     <None Include="skyBox.vs" />
   </ItemGroup>
@@ -367,7 +373,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{A7CD086B-F2E7-4EC7-91FA-FF7082DE4B10}</ProjectGuid>
     <RootNamespace>finalproject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

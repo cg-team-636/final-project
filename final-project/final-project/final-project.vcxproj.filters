@@ -1068,6 +1068,24 @@
     <None Include="model.vs">
       <Filter>头文件\shader</Filter>
     </None>
+    <None Include="debugQuadDepthFs.fs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="debugQuadVs.vs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="shadowMappingDepthFs.fs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="shadowMappingDepthVs.vs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="shadowMappingFs.fs">
+      <Filter>头文件\shader</Filter>
+    </None>
+    <None Include="shadowMappingVs.vs">
+      <Filter>头文件\shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="glm\CMakeLists.txt">
