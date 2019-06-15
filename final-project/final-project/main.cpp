@@ -42,11 +42,15 @@ glm::vec3 lightPos(-1.0f, 5.0f, 2.0f);
 
 // 全局 blocks 
 vector<vector<Block*>> blocks;
+vector<Block*> virtualBlock;
+
 //	初始化blockVAO、blockVBO
 unsigned int blockVAO;
 unsigned int blockVBO;
 
 int main() {
+	
+
 	//	初始化opengl窗口和配置
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -102,6 +106,7 @@ int main() {
 	
 	//	初始化Block
 	vector<Block*> floors = createFloor();
+	blocks.push_back(virtualBlock);
 	blocks.push_back(floors);
 
 	// 测试阴影的方块
@@ -304,19 +309,143 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
+Block* nowBlock = NULL;
+bool firstPlaceFlag = true;
+bool startPlacingFlag = false;
+glm::vec3 newCenter;
+
+
+
+
+
+bool checkCollision2D(float x1, float x2, float y1, float y2, float xCenter, float yCenter) {
+	if (x1 - x2 == 0) {
+		if (x1 < xCenter + 0.5 && x1 > xCenter - 0.5) return true;
+		return false;
+	}
+	else {
+		float inv = 1 / (x1 - x2);
+		float k = (y1 - y2) * inv;
+		float b = (x1 * y2 - x2 * y1) * inv;
+		float xF = xCenter + 0.5;
+		float t0 = k * (xCenter - 0.5) + b;
+		float t1 = k * (xCenter + 0.5) + b;
+		if (t0 > t1) {
+			float tmp = t0;
+			t1 = tmp;
+			t0 = t1;
+		}
+		if (t0 <= yCenter - 0.5) {
+			if (t1 > yCenter - 0.5) return true;
+			return false;
+		}
+		else if (t0 < yCenter + 0.5) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
+
+
+Block* checkCollision(glm::vec3 start, glm::vec3 end, glm::vec3 towards) {
+
+	Block* hit = NULL;
+	float x1 = start.x;
+	float x2 = end.x;
+	float y1 = start.y;
+	float y2 = end.y;
+	float z1 = start.x;
+	float z2 = end.z;
+
+	for (int i = 1; i < blocks.size(); i++) {
+		for (Block* b : blocks[i]) {
+
+			glm::vec3 c = b->center.Position;
+			glm::vec3 v1 = b->center.Position - start;
+
+			
+			if (glm::dot(v1, towards) < 0) continue;
+
+			if (checkCollision2D(x1, x2, y1, y2, c.x, c.y) && checkCollision2D(y1, y2, z1, z2, c.y, c.z)) {
+				if (b != nowBlock) {
+					if (hit == NULL) {
+						hit = b;
+					}
+					else {
+						if (glm::dot(v1, towards) < glm::dot(hit->center.Normal - start, towards)) {
+							hit = b;
+						}
+					}
+				}
+				
+			}
+		}
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+	if (hit) {
+		glm::vec3 p = hit->center.Position;
+		float t0 = start.x - p.x;
+		float t1 = start.y - p.y;
+		float t2 = start.z - p.z;
+		float a0 = glm::abs(t0);
+		float a1 = glm::abs(t1);
+		float a2 = glm::abs(t2);
+		if (a0 < a1) {
+			if (a1 < a2) {
+				if (t2 > 0) {
+					newCenter = glm::vec3(p.x, p.y, p.z + 1);
+				}
+				else {
+					newCenter = glm::vec3(p.x, p.y, p.z - 1);
+				}
+			}
+			else {
+				if (t1 > 0) {
+					newCenter = glm::vec3(p.x, p.y + 1, p.z);
+				}
+				else {
+					newCenter = glm::vec3(p.x, p.y - 1, p.z);
+				}
+			}
+		}
+		else {
+			if (t0 > 0) {
+				newCenter = glm::vec3(p.x + 1, p.y, p.z);
+			}
+			else {
+				newCenter = glm::vec3(p.x - 1, p.y, p.z);
+			}
+		}
+	}
+	return hit;
+}
+
+void placingCube() {
+
+	glm::vec3 camPos = camera.Position;
+
+	glm::vec3 towards = glm::normalize(camera.Front);
+
+	float nearUnit = 3;
+	float farUnit = 15;
+
+	glm::vec3 startPos = camPos + towards * nearUnit;
+	glm::vec3 endPos = camPos + towards * farUnit;
+
+	Block* newBlock = checkCollision(startPos, endPos, towards);
+	
+	if (newBlock) {
+		nowBlock = newBlock;
+		if (!firstPlaceFlag) {
+			blocks[0].pop_back();
+		}
+		firstPlaceFlag = false;
+		
+		blocks[0].push_back(new Block(newCenter, "textures/blocks/dirt.png"));
+	}
 }
 
 //	鼠标移动
@@ -334,6 +463,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	mouseY = ypos;
 
 	camera.ProcessMouseMovement(xoffset, yoffset);
+
+	if (startPlacingFlag) {
+		placingCube();
+	}
 }
 
 //	鼠标放缩
@@ -343,33 +476,65 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 
 void renderScene() {
 	//	渲染所有的Block
+	
 	for (int i = 0; i < blocks.size(); i++) {
 		//	将vector<Block>转为vector<Point>
-		vector<Point> vertices = blockToPoint(blocks[i]);
+		if (!blocks[i].empty()) {
+			vector<Point> vertices = blockToPoint(blocks[i]);
+			//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
+			glBindVertexArray(blockVAO);
+			glGenBuffers(1, &blockVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
-		//	绑定blockVAO, blockVBO(若有多个VAO, VBO, 在传入缓冲前要先绑定VAO, VBO)
-		glBindVertexArray(blockVAO);
-		glGenBuffers(1, &blockVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, blockVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Point) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+			//	设置位置属性
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(0);
 
-		//	设置位置属性
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
+			//	设置纹理属性
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
+			glEnableVertexAttribArray(1);
 
-		//	设置纹理属性
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, TexCoords));
-		glEnableVertexAttribArray(1);
-
-		//	设置法向量属性
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
-		glEnableVertexAttribArray(2);
+			//	设置法向量属性
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offsetof(Point, Normal));
+			glEnableVertexAttribArray(2);
 
 
-		//	激活Block纹理并绘制Block
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, blocks[i][0]->textureID);
-		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-		glBindVertexArray(0);
+			//	激活Block纹理并绘制Block
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, blocks[i][0]->textureID);
+			glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+			glBindVertexArray(0);
+		}
+	}
+}
+
+
+void processInput(GLFWwindow* window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(RIGHT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+		startPlacingFlag = !startPlacingFlag;
+	}
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+		if (startPlacingFlag) {
+			nowBlock = NULL;
+			firstPlaceFlag = true;
+			if (!blocks[0].empty()) {
+				Block* b = blocks[0].back();
+				blocks[0].pop_back();
+				blocks[1].push_back(b);
+			}
+		}
 	}
 }
