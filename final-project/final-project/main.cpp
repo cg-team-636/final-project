@@ -105,8 +105,30 @@ int main() {
 	modelShader.use();
 	
 	//	初始化Block
-	vector<Block*> floors = createFloor();
 	blocks.push_back(virtualBlock);
+
+	// 树木
+	vector<Block*> trees = createTree();
+	blocks.push_back(trees);
+
+	// 树叶
+	vector<Block*> TreeLeaves = createTreeLeaves();
+	blocks.push_back(TreeLeaves);
+
+	// 绿草地
+	vector<Block*> greenFloors = createGreenFloors();
+	blocks.push_back(greenFloors);
+
+	// 水
+	vector<Block*> waters = createWaters();
+	blocks.push_back(waters);
+
+	// 泥地
+	vector<Block*> DirtFloors = createDirtFloors();
+	blocks.push_back(DirtFloors);
+
+	// 地板
+	vector<Block*> floors = createFloor();
 	blocks.push_back(floors);
 
 	// 测试阴影的方块
@@ -122,9 +144,9 @@ int main() {
 	blocks.push_back(testBlocks);
 
 	//	光照参数
-	float ambientStrength = 1.0f;
-	float diffuseStrength = 1.0f;
-	float specularStrength = 1.0f;
+	float ambientStrength = 0.7f;
+	float diffuseStrength = 0.7f;
+	float specularStrength = 0.7f;
 	int ShininessStrength = 64;
 	glm::vec3 viewPos;
 
@@ -258,10 +280,12 @@ int main() {
 
 		//	渲染导入的模型
 		if (true) {
+			glm::mat4 model1 = glm::mat4(1.0f);
+			model1 = glm::translate(model1, glm::vec3(5, 0, -5));
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
-			modelShader.setMat4("model", model);
+			modelShader.setMat4("model", model1);
 			ourModel.Draw(modelShader);
 		}
 
