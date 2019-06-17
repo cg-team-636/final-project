@@ -260,13 +260,13 @@ int main() {
 		blockShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		blockShader.setVec3("lightPos", lightPos);
 		blockShader.setVec3("viewPos", viewPos);	
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, depthMap);
-		renderScene();
 		if (startPlacingFlag) {
 			placingCube();
 		}
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		renderScene();
+		
 		//	渲染导入的模型
 		if (true) {
 			modelShader.use();
@@ -389,7 +389,6 @@ Block* checkCollisionWithBoxes() {
 			}
 			if (checkCollision2D(x1, x2, y1, y2, bPos.x, bPos.y) && checkCollision2D(y1, y2, z1, z2, bPos.y, bPos.z)
 				&& checkCollision2D(x1, x2, z1, z2, bPos.x, bPos.z)) {
-				if (b != nowBlock) {
 					if (hit == NULL) {
 						hit = b;
 					}
@@ -397,9 +396,7 @@ Block* checkCollisionWithBoxes() {
 						if (glm::abs(glm::dot(v1, towards)) < glm::abs(glm::dot(hit->center.Position - start, towards))) {
 							hit = b;
 						}
-					}
-				}
-				
+					}			
 			}
 		}
 	}
@@ -429,7 +426,7 @@ void deleteCube() {
 void placingCube() {
 	Block* hit = checkCollisionWithBoxes();
 
-	if (hit) {
+	if (hit && hit != nowBlock) {
 		glm::vec3 bPos = hit->center.Position;
 		glm::vec3 newCenter = bPos;
 		glm::vec3 towards = camera.Front;
@@ -591,6 +588,7 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		texInd = 2;
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+		blocks[0].clear();
 		if (!eFlag) {
 			if (!startPlacingFlag) startDeletingFlag = false;
 			startPlacingFlag = !startPlacingFlag;
@@ -601,6 +599,7 @@ void processInput(GLFWwindow* window) {
 		eFlag = false;
 	}
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+		blocks[0].clear();
 		if (!rFlag) {
 			if (!startDeletingFlag) startPlacingFlag = false;
 			startDeletingFlag = !startDeletingFlag;
