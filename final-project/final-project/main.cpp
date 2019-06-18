@@ -107,12 +107,16 @@ int main() {
 
 	Shader modelShader("model.vs", "model.fs");
 	modelShader.use();
+
 	
+	blocks.push_back(virtualBlock);
+
+	vector<Block*> trees = createTree();
+	blocks.push_back(trees);
+
+
 	//	初始化Block
 	vector<Block*> floors = createFloor();
-	blocks.push_back(virtualBlock);
-	blocks.push_back(floors);
-
 	// 测试阴影的方块
 	vector<Block*> testBlocks;
 	Block* testBlock1 = new Block(Point(glm::vec3(-1.0f, 5.0f, 2.0f)), "textures/blocks/dirt.png");
@@ -128,6 +132,22 @@ int main() {
 	blocks.push_back(beacon);
 	blocks.push_back(brick);
 	blocks.push_back(bedrock);
+
+	
+	vector<Block*> TreeLeaves = createTreeLeaves();
+	blocks.push_back(TreeLeaves);
+
+	vector<Block*> greenFloors = createGreenFloors();
+	blocks.push_back(greenFloors);
+
+	vector<Block*> waters = createWaters();
+	blocks.push_back(waters);
+
+	vector<Block*> DirtFloors = createDirtFloors();
+	blocks.push_back(DirtFloors);
+
+	vector<Block*> floors2 = createFloor();
+	blocks.push_back(floors2);
 
 	//	光照参数
 	float ambientStrength = 1.0f;

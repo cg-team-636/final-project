@@ -1,16 +1,22 @@
 ﻿  main.cpp
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\block.h(125): warning C4018: “<”: 有符号/无符号不匹配
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(208): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(354): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(355): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(356): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(387): warning C4018: “<”: 有符号/无符号不匹配
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(478): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(479): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(483): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(484): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(486): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(487): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(498): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-d:\user_chen\computer graph\peoject\final-project\final-project\final-project\main.cpp(504): warning C4018: “<”: 有符号/无符号不匹配
-  final-project.vcxproj -> D:\user_chen\computer graph\peoject\final-project\final-project\Debug\final-project.exe
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\block.h(125): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(214): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(363): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(364): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(401): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(432): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(456): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(464): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(469): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(475): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(480): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(485): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(531): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(532): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(536): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(537): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(539): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(540): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(547): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+c:\users\c7851\desktop\新建文件夹 (2)\final-project\final-project\final-project\main.cpp(553): warning C4018: “<”: 有符号/无符号不匹配
+  final-project.vcxproj -> C:\Users\c7851\Desktop\新建文件夹 (2)\final-project\final-project\Debug\final-project.exe
