@@ -24,8 +24,7 @@
 *.a
 
 # Executables
-*.exe
 *.out
 *.app
 
-final-project/.vs
+src/final-project/.vs
