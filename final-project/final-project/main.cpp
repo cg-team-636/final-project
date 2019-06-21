@@ -14,7 +14,7 @@
 
 #include "shader.h"
 #include "camera.h"
-#include "floor.h"
+#include "scene.h"
 #include "skyBox.h"
 #include "model.h"
 
@@ -289,10 +289,12 @@ int main() {
 		
 		//	渲染导入的模型
 		if (true) {
+			glm::mat4 mModel = glm::mat4(1.0f);
+			mModel = glm::translate(mModel, glm::vec3(6, 0, -6));
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
-			modelShader.setMat4("model", model);
+			modelShader.setMat4("model", mModel);
 			ourModel.Draw(modelShader);
 		}
 

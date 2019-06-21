@@ -66,7 +66,7 @@
     <ClInclude Include="assimp\version.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="camera.h" />
-    <ClInclude Include="floor.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="glad\glad.h" />
     <ClInclude Include="GLFW\glfw3.h" />
     <ClInclude Include="GLFW\glfw3native.h" />
@@ -373,7 +373,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{A7CD086B-F2E7-4EC7-91FA-FF7082DE4B10}</ProjectGuid>
     <RootNamespace>finalproject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

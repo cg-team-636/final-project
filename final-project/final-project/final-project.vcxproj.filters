@@ -542,9 +542,6 @@
     <ClInclude Include="camera.h">
       <Filter>头文件\camera</Filter>
     </ClInclude>
-    <ClInclude Include="floor.h">
-      <Filter>头文件\asset</Filter>
-    </ClInclude>
     <ClInclude Include="block.h">
       <Filter>头文件\asset</Filter>
     </ClInclude>
@@ -681,6 +678,9 @@
       <Filter>头文件\asset</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
+      <Filter>头文件\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
       <Filter>头文件\asset</Filter>
     </ClInclude>
   </ItemGroup>
