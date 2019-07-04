@@ -550,8 +550,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 }
 
 void renderScene() {
-	
-
 	for (int i = 0; i < blocks.size(); i++) {
 		//	½«vector<Block>×ªÎªvector<Point>
 		if (!blocks[i].empty()) {
@@ -579,10 +577,8 @@ void renderScene() {
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, blocks[i][0]->textureID);
 			glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-			glBindVertexArray(0);
 		}
 	}
-	
 }
 
 bool eFlag = false;

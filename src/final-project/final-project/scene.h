@@ -6,7 +6,7 @@
 using namespace std;
 
 
-//	创建 20 * 20的地板
+//	创建 30 * 30的地板
 vector<Block*> createFloor() {
 	vector<Block*> floors;
 

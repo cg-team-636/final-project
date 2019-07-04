@@ -1,1 +1,77 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: 找不到 Windows SDK 版本10.0.17134.0。请安装所需的版本的 Windows SDK 或者在项目属性页中或通过右键单击解决方案并选择“重定解决方案目标”来更改 SDK 版本。
+﻿  glad.c
+  dummy.cpp
+  glm.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_widgets.cpp
+  main.cpp
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\mesh.h(83): warning C4267: “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(214): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(365): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(366): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(458): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(466): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(471): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(477): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(482): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(487): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(533): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(534): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(538): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(539): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(541): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(542): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(549): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\grade3\计图期末作业\final-project\src\final-project\final-project\main.cpp(581): warning C4267: “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+  正在生成代码...
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetWindowSize，该符号在函数 "void __cdecl ImGui_ImplGlfw_NewFrame(void)" (?ImGui_ImplGlfw_NewFrame@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetFramebufferSize，该符号在函数 "void __cdecl ImGui_ImplGlfw_NewFrame(void)" (?ImGui_ImplGlfw_NewFrame@@YAXXZ) 中被引用
+main.obj : error LNK2001: 无法解析的外部符号 glfwGetFramebufferSize
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetWindowAttrib，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetInputMode，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetInputMode，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ) 中被引用
+main.obj : error LNK2001: 无法解析的外部符号 glfwSetInputMode
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetMouseButton，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ) 中被引用
+main.obj : error LNK2001: 无法解析的外部符号 glfwGetMouseButton
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetCursorPos，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetCursorPos，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwCreateStandardCursor，该符号在函数 "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwDestroyCursor，该符号在函数 "void __cdecl ImGui_ImplGlfw_Shutdown(void)" (?ImGui_ImplGlfw_Shutdown@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetCursor，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetKeyCallback，该符号在函数 "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetCharCallback，该符号在函数 "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetMouseButtonCallback，该符号在函数 "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetScrollCallback，该符号在函数 "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z) 中被引用
+main.obj : error LNK2001: 无法解析的外部符号 glfwSetScrollCallback
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetJoystickAxes，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateGamepads(void)" (?ImGui_ImplGlfw_UpdateGamepads@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetJoystickButtons，该符号在函数 "void __cdecl ImGui_ImplGlfw_UpdateGamepads(void)" (?ImGui_ImplGlfw_UpdateGamepads@@YAXXZ) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwSetClipboardString，该符号在函数 "void __cdecl ImGui_ImplGlfw_SetClipboardText(void *,char const *)" (?ImGui_ImplGlfw_SetClipboardText@@YAXPEAXPEBD@Z) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetClipboardString，该符号在函数 "char const * __cdecl ImGui_ImplGlfw_GetClipboardText(void *)" (?ImGui_ImplGlfw_GetClipboardText@@YAPEBDPEAX@Z) 中被引用
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetTime，该符号在函数 "void __cdecl ImGui_ImplGlfw_NewFrame(void)" (?ImGui_ImplGlfw_NewFrame@@YAXXZ) 中被引用
+main.obj : error LNK2001: 无法解析的外部符号 glfwGetTime
+imgui_impl_glfw.obj : error LNK2019: 无法解析的外部符号 glfwGetWin32Window，该符号在函数 "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwInit，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwTerminate，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwWindowHint，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwCreateWindow，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwWindowShouldClose，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwSetWindowShouldClose，该符号在函数 "void __cdecl processInput(struct GLFWwindow *)" (?processInput@@YAXPEAUGLFWwindow@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwSetFramebufferSizeCallback，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwPollEvents，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwGetKey，该符号在函数 "void __cdecl processInput(struct GLFWwindow *)" (?processInput@@YAXPEAUGLFWwindow@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwSetCursorPosCallback，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwMakeContextCurrent，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwSwapBuffers，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 glfwGetProcAddress，该符号在函数 main 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ)，该符号在函数 "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@AEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ)，该符号在函数 "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@AEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z)，该符号在函数 "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ)，该符号在函数 "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@AEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 aiGetMaterialTextureCount，该符号在函数 "public: unsigned int __cdecl aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QEBAIW4aiTextureType@@@Z) 中被引用
+main.obj : error LNK2019: 无法解析的外部符号 aiGetMaterialTexture，该符号在函数 "public: enum aiReturn __cdecl aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z) 中被引用
+lib\assimp-vc140-mt.lib : warning LNK4272: 库计算机类型“x86”与目标计算机类型“x64”冲突
+lib\glfw3.lib : warning LNK4272: 库计算机类型“x86”与目标计算机类型“x64”冲突
+E:\Grade3\计图期末作业\final-project\src\final-project\x64\Debug\final-project.exe : fatal error LNK1120: 40 个无法解析的外部命令
