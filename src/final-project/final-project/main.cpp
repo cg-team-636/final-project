@@ -28,12 +28,13 @@ void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void renderScene();
+void checkGravity();
 bool checkCollision2D(float x1, float x2, float y1, float y2, float xCenter, float yCenter);
 Block* checkCollisionWithBoxes();
 void placingCube();
 
 //	初始化相机
-Camera camera(glm::vec3(0.0f, 10.0f, 10.0f));
+Camera camera(glm::vec3(15.0f, 10.0f, -2.0f));
 float mouseX = 0.0f;
 float mouseY = 0.0f;
 bool firstMouse = true;
@@ -42,7 +43,7 @@ bool startPlacingFlag = false;
 float lastFrame = 0.0f;
 
 //	初始化光源位置
-glm::vec3 lightPos(-1.0f, 5.0f, 2.0f);
+glm::vec3 lightPos(-1.0f, 10.0f, 2.0f);
 
 // 全局 blocks 
 vector<vector<Block*>> blocks;
@@ -234,6 +235,8 @@ int main() {
 		ImGui::Checkbox("Export the model", &export_model);
 		ImGui::End();
 
+		checkGravity();
+
 		//	创建坐标转换矩阵, 将局部坐标变换为标准设备坐标 
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
@@ -258,7 +261,6 @@ int main() {
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		renderScene();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		// 重置viewport
@@ -581,6 +583,25 @@ void renderScene() {
 	}
 }
 
+void checkCollision(Camera_Movement m) {
+	
+	switch (m)
+	{
+	case FORWARD:
+		
+		break;
+	case BACKWARD:
+		break;
+	case LEFT:
+		break;
+	case RIGHT:
+		break;
+	default:
+		break;
+	}
+}
+
+
 bool eFlag = false;
 bool clickFlag = false;
 bool rFlag = false;
@@ -599,6 +620,7 @@ void processInput(GLFWwindow* window) {
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		texInd = 0;
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
@@ -645,5 +667,30 @@ void processInput(GLFWwindow* window) {
 	}
 	else {
 		clickFlag = false;
+	}
+}
+
+bool findBlockDownward() {
+	glm::vec3 cam = camera.Position;
+	glm::vec3 center = glm::vec3(int(cam.x + 0.5), int(cam.y + 0.5), int(cam.z + 0.5));
+	for (vector<Block *> v : blocks) {
+		for (Block * b : v) {
+			glm::vec3 bCenter = b->center.Position;
+			if (center.x == bCenter.x && center.z == bCenter.z && center.y - bCenter.y < 3) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+float downVelocity = 0;
+void checkGravity() {
+	if (findBlockDownward()) {
+		downVelocity = 0;
+	}
+	else {
+		downVelocity += 0.05;
+		camera.moveDown(downVelocity);
 	}
 }

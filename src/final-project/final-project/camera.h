@@ -69,14 +69,16 @@ public:
 	{
 		// 间隔时间是每一帧的间隔时间,为了使移动更平滑
 		float velocity = MovementSpeed * deltaTime;
+		glm::vec3 FrontParallel = glm::normalize(glm::vec3(Front.x, 0, Front.z));
+		glm::vec3 RightParallel = glm::normalize(glm::vec3(Right.x, 0, Right.z));
 		if (direction == FORWARD)
-			Position += Front * velocity;
+			Position += FrontParallel * velocity;
 		if (direction == BACKWARD)
-			Position -= Front * velocity;
+			Position -= FrontParallel * velocity;
 		if (direction == LEFT)
-			Position -= Right * velocity;
+			Position -= RightParallel * velocity;
 		if (direction == RIGHT)
-			Position += Right * velocity;
+			Position += RightParallel * velocity;
 	}
 
 	// 鼠标移动
@@ -109,6 +111,11 @@ public:
 			Zoom = 1.0f;
 		if (Zoom >= 45.0f)
 			Zoom = 45.0f;
+	}
+
+	void moveDown(float speed) {
+		Position.y -= speed;
+		updateCameraVectors();
 	}
 
 private:
